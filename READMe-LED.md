@@ -1,4 +1,3 @@
-```markdown
 # Sequence-to-Sequence Model Training with LED
 
 This repository contains code for training a sequence-to-sequence model using the [LED (Longformer Encoder-Decoder)](https://huggingface.co/allenai/led-base-16384) architecture from the Hugging Face Transformers library. The code is designed to handle a dataset of sequences and their associated numerical labels.
@@ -72,10 +71,6 @@ Here is an example of how the input and output sequences might be structured:
 **Input Sequence**: `["example", "input", "sequence"]`
 
 **Output Labels**: `["1.0", "2.0", "3.0"]`
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
