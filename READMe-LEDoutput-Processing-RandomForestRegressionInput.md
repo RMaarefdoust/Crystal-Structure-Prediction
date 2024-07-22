@@ -34,7 +34,7 @@ pip install pandas numpy
    Execute the script using Python:
 
    ```bash
-   python LEDoutput-process-MAPinput.py
+   python LEDoutput-process-RandomForestRegressioninput.py
    ```
 
    The script will:
