@@ -34,7 +34,7 @@ pip install pandas numpy
    Execute the script using Python:
 
    ```bash
-   python process_led_predictions.py
+   python LEDoutput-process-MAPinput.py
    ```
 
    The script will:
