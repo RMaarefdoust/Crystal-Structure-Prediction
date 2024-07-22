@@ -40,7 +40,7 @@ pip install torch transformers pandas matplotlib tqdm
    Execute the script using Python:
 
    ```bash
-   python train_led_model.py
+   python LED-train.py
    ```
 
    The script will:
