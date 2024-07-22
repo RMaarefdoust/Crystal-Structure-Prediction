@@ -34,7 +34,7 @@ pip install torch transformers pandas
    Execute the script using Python:
 
    ```bash
-   python predict_led_model.py
+   python LED-test.py
    ```
 
    The script will:
