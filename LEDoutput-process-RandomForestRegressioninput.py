@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 # Load data from CSV
-data = pd.read_csv("test-lstm-led_8000.csv")
+data = pd.read_csv("train-RFR-1000-ledoutput2.csv")
 datalist = data["predicted_output-led"].tolist()
 
 # Ensure y_test matches the shape of x_test
@@ -74,7 +74,7 @@ for item_index, item in enumerate(datalist):
 processed_df = pd.DataFrame(processed_data)
 
 # Save processed data to a new CSV file
-processed_df.to_csv('test-lstm-led_8000_processed.csv', index=False)
+processed_df.to_csv('train-RFR-1000-ledoutput2-prep.csv', index=False)
 
 print("Processed data saved to 'test-lstm-led_8000_processed.csv'")
 
