@@ -99,10 +99,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Model training
 model = RandomForestRegressor(n_estimators=300, random_state=42) 
 
-# n_estimators=100 Mean Squared Error test: 0.08293091420240355
-#n =300             Mean Squared Error test: 0.082873623702527
-#
-
 model.fit(X_train, y_train)
 
 
