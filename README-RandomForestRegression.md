@@ -1,85 +1,104 @@
 # Random Forest Regression for Atom Site Data
 
-
-This repository contains code to process and analyze atom site data using a Random Forest Regressor. The script loads, cleans, and transforms data, trains a model, and evaluates its performance.
-
 ## Overview
 
-The script performs the following tasks:
-
-1. **Data Loading**: Reads a CSV file containing processed atom site data.
-2. **Data Cleaning and Transformation**: Converts string representations of lists to numeric values and cleans symbolic data.
-3. **Data Flattening**: Expands lists into individual rows for each atom.
-4. **Feature Encoding**: Encodes categorical atom site type symbols.
-5. **Model Training and Evaluation**: Trains a Random Forest Regressor on the data and evaluates its performance.
+This script is designed for data preprocessing, model training, and evaluation using a Random Forest Regressor to predict atomic positions based on given features. The dataset comprises atomic coordinates and types, which are preprocessed and then used to train a machine learning model.
 
 ## Requirements
 
-- `numpy`
-- `pandas`
-- `scikit-learn`
-- `re` (Standard Python library)
+Ensure you have the following Python libraries installed:
 
-You can install the required packages using pip:
+- numpy
+- pandas
+- scikit-learn
 
-```bash
+You can install them using pip:
+
+```sh
 pip install numpy pandas scikit-learn
 ```
 
+## Data Loading and Preprocessing
+
+### 1. Load Data
+
+The script reads data from two CSV files:
+
+- `train-RFR-1000-ledoutput_process.csv`: Training dataset
+- `test-final-100-ledoutput_process.csv`: Testing dataset
+
+### 2. Clean and Convert Data
+
+The script includes functions to clean and convert string representations of lists into actual Python lists of floats.
+
+- **convert_to_float_list**: Converts a string of numbers into a list of floats.
+- **clean_atom_site_type_symbol**: Cleans and converts atom site type symbols from string format.
+
+These functions are applied to the relevant columns in both training and testing datasets.
+
+### 3. Add `num_atoms` Column
+
+A new column `num_atoms` is added to both datasets, representing the number of atoms based on the `Atom_site_type_symbol` column.
+
+### 4. Flatten Data
+
+The nested lists in the dataset are flattened to create individual rows for each atom. This process ensures that each atom's data is represented in a single row, making it suitable for model training.
+
+### 5. Encode Categorical Data
+
+The atom site type symbols are encoded using `LabelEncoder` to convert categorical data into numerical format.
+
+## Model Training and Evaluation
+
+### 1. Split Data
+
+The data is split into training and testing sets using an 80-20 split.
+
+### 2. Train Model
+
+A `RandomForestRegressor` is trained with the following hyperparameters:
+
+- `n_estimators=300`
+- `random_state=42`
+
+### 3. Make Predictions
+
+Predictions are made on both the test set and an additional test dataset (`df_test`). The mean squared error (MSE) is calculated to evaluate the model's performance.
+
+### 4. Hyperparameter Tuning
+
+A grid search with cross-validation (`GridSearchCV`) is performed to find the best hyperparameters for the `RandomForestRegressor`. The parameters grid includes:
+
+- `n_estimators`: [100, 200, 300]
+- `max_depth`: [None, 10, 20]
+- `min_samples_split`: [2, 5, 10]
+- `min_samples_leaf`: [1, 2, 4]
+
+The best parameters are printed, and the model with the best parameters is evaluated again.
+
 ## Usage
 
-1. **Prepare the Data**:
-   Ensure you have a CSV file named `led_processed_data.csv` in the same directory as the script. The CSV file should include the following columns:
-   - `Updated_x`, `Updated_y`, `Updated_z`: Lists of predicted atom site coordinates.
-   - `Real_x`, `Real_y`, `Real_z`: Lists of actual atom site coordinates.
-   - `Atom_site_type_symbol`: List of atom site type symbols.
+1. Place the script in the same directory as your data files (`train-RFR-1000-ledoutput_process.csv` and `test-final-100-ledoutput_process.csv`).
+2. Run the script:
 
-2. **Run the Script**:
-   Execute the script using Python:
+```sh
+python script_name.py
+```
 
-   ```bash
-   python RandomForestRegression.py
-   ```
+3. The script will output the mean squared error for the predictions and the best hyperparameters found by the grid search.
 
-   The script will:
+## Output
 
-   - Load and clean the data from `led_processed_data.csv`.
-   - Flatten the data and encode categorical variables.
-   - Split the data into training and testing sets.
-   - Train a Random Forest Regressor model.
-   - Print the Mean Squared Error (MSE) of the model's predictions.
+The script prints the following:
 
-## Code Details
+- The training and testing data after preprocessing.
+- Mean squared error for initial model predictions.
+- Best hyperparameters found by the grid search.
+- Mean squared error for the model with the best hyperparameters.
 
-### Functions
+## Notes
 
-- **`convert_to_float_list(num_str)`**: Converts a string representation of a list of numbers to a list of floats.
-- **`clean_atom_site_type_symbol(symbol_str)`**: Cleans and converts atom site type symbols into a list of strings.
+- Ensure your data files are correctly formatted and located in the right directory.
+- Modify the parameter grid in the script if you want to experiment with different hyperparameters.
 
-### Data Processing
-
-- **Data Cleaning**: Converts list strings to numeric values and cleans symbolic data.
-- **Data Flattening**: Expands lists into individual rows for each atom, ensuring each atom's data is represented in separate rows.
-- **Feature Encoding**: Encodes categorical atom site type symbols into numeric values for model training.
-
-### Model Training
-
-- **Features and Targets**: Defines features (`Updated_x`, `Updated_y`, `Updated_z`, `Atom_site_type_symbol`) and targets (`Real_x`, `Real_y`, `Real_z`).
-- **Train-Test Split**: Splits the data into training and testing sets.
-- **Model Training**: Trains a Random Forest Regressor with 100 estimators.
-- **Model Evaluation**: Calculates and prints the Mean Squared Error (MSE) of the model's predictions.
-
-## Example
-
-Given an input CSV with:
-
-| Updated_x  | Updated_y  | Updated_z  | Real_x    | Real_y    | Real_z    | Atom_site_type_symbol |
-|------------|------------|------------|-----------|-----------|-----------|-----------------------|
-| "[1.0, 0.5]" | "[0.8, 0.4]" | "[0.6, 0.3]" | "[1.0, 0.5]" | "[0.8, 0.4]" | "[0.6, 0.3]" | "[A, B]" |
-
-The script will:
-
-1. Clean and convert data.
-2. Flatten lists and encode categorical variables.
-3. Train a Random Forest model.
-4. Print the Mean Squared Error of the predictions.
+This README provides a comprehensive guide to understanding and running the script. Follow the steps carefully to ensure successful execution and accurate results.
