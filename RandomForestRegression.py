@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 import re
+from sklearn.model_selection import GridSearchCV
 
 # Function to convert string with numbers to list of floats
 def convert_to_float_list(num_str):
@@ -20,8 +21,8 @@ def clean_atom_site_type_symbol(symbol_str):
     return symbol_list
 
 # Load data from CSV
-df = pd.read_csv('train-lstm-led_8000_processed.csv')
-df_test = pd.read_csv('test-lstm-led_8000_processed.csv')#'test-low-led.csv')
+df = pd.read_csv('train-RFR-1000-ledoutput_process.csv')
+df_test = pd.read_csv('test-final-100-ledoutput_process.csv')#'test-low-led.csv')
 
 # Clean and convert list strings
 df['Updated_x'] = df['Updated_x'].apply(lambda x: convert_to_float_list(str(x)))
@@ -122,8 +123,6 @@ print(y_pred_test)
 mse_test = mean_squared_error(y_test_test, y_pred_test)
 print(f"Mean Squared Error test: {mse}")
 
-
-from sklearn.model_selection import GridSearchCV
 
 # Define the parameter grid to search
 param_grid = {
